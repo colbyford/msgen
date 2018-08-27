@@ -16,7 +16,7 @@ install_msgen <- function(method = "pip"){
     } else if (method == "conda"){
       system("conda install msgen")
     } else if (method == "setup.py"){
-      reticulate::py_run_file("src/setup.py")
+      reticulate::py_run_file("python/setup.py")
     }  else{
       cat("Methods supported: `setup.py`, `pip`,`easy_install`, and `conda`.")
     }
@@ -30,7 +30,7 @@ install_msgen <- function(method = "pip"){
     } else if (method == "conda"){
       system("sudo conda install msgen")
     } else if (method == "setup.py"){
-      reticulate::py_run_file("src/setup.py")
+      reticulate::py_run_file("python/setup.py")
     } else{
       cat("Methods supported: `setup.py`, `pip`,`easy_install`, and `conda`.")
     }
