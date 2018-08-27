@@ -1,6 +1,7 @@
 # History files
 .Rhistory
 .Rapp.history
+.keys
 
 # Session Data files
 .RData
