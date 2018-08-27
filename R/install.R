@@ -1,18 +1,27 @@
 #' @title Install Python Libraries
 #' @description Install msgen and Azure Storage Python Libraries.
 #' 
-#' @usage install_msgen(method = "pip")
+#' @param method Method by which to install the msgen library.
+#' (Choose from either "setup.py", "pip", "easy_install", or "conda".)
+#' @param version Python version under which the package should be installed.
+#' (Note: must be a version of Python 2 such as 2.7.)
+#' 
+#' @usage install_msgen(method = "pip", version = 2.7)
 #' 
 #' @import reticulate
 #' @export install_msgen
 ####################
 
-install_msgen <- function(method = "pip"){
+install_msgen <- function(method = "pip", version = 2.7){
   os <- .Platform$OS.type
   if (os == "windows"){
     if (method == "pip"){
-      system("pip install --upgrade --no-deps msgen")
-      system("pip install msgen")
+      #system("pip install --upgrade --no-deps msgen")
+      command <- paste0("pip-",
+                        version,
+                        " install msgen",
+                        sep = "")
+      system(command)
     } else if (method == "easy_install"){
       system("easy_install msgen")
     } else if (method == "conda"){
@@ -24,9 +33,13 @@ install_msgen <- function(method = "pip"){
     }
   } else if (os == "unix"){
     if (method == "pip"){
-      system("sudo apt-get install -y build-essential libssl-dev libffi-dev libpython-dev python-dev python-pip")
-      system("sudo pip install --upgrade --no-deps msgen")
-      system("sudo pip install msgen")
+      #system("sudo apt-get install -y build-essential libssl-dev libffi-dev libpython-dev python-dev python-pip")
+      #system("sudo pip install --upgrade --no-deps msgen")
+      command <- paste0("sudo pip-",
+                        version,
+                        " install msgen",
+                        sep = "")
+      system(command)
     } else if (method == "easy_install"){
       system("sudo easy_install msgen")
     } else if (method == "conda"){
