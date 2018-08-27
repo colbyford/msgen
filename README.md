@@ -36,7 +36,7 @@ library(msgen)
 
 ## Links
 
-- [__msgen__ Python command line client](https://github.com/MicrosoftGenomics/msgen)
+- [__msgen__ Python command-line client](https://github.com/MicrosoftGenomics/msgen)
 - [Microsoft Genomics service on Azure](https://azure.microsoft.com/en-us/services/genomics/)
 - [Microsoft Genomics Documentation](https://docs.microsoft.com/en-us/azure/genomics/)
 

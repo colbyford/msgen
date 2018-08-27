@@ -1,6 +1,8 @@
 #' @title Install Python Libraries
 #' @description Install msgen and Azure Storage Python Libraries.
 #' 
+#' @usage install_msgen(method = "pip")
+#' 
 #' @import reticulate
 #' @export install_msgen
 ####################
