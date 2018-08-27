@@ -3,6 +3,10 @@
 <h3 align = "right">Colby T. Ford, Ph.D.</h3>
 <img align="right" src="https://raw.githubusercontent.com/colbyford/msgen/master/img/msgen_hex.png" alt="msgen icon" width="200">
 
+## Description
+
+The Microsoft Genomics service in Azure can power genome sequencing using a cloud implementation of the Burrows-Wheeler Aligner (BWA) and the Genome Analysis Toolkit (GATK) for secondary analysis. The pipeline can take in multiple FASTQ and BAM files and provides alignment and variant outputs.
+
 ## Installation
 
 You can install the latest stable version from GitHub using the following command:
@@ -39,4 +43,5 @@ library(msgen)
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details
+This package/project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details
+**Note: The Microsoft Genomics service, Azure, and the `msgen` Python command-line interface are all Copyright (c) Microsoft Corporation. All rights reserved.**
