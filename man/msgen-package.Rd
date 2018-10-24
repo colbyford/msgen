@@ -12,8 +12,8 @@ This package allows users to submit, list, check the status, and cancel workflow
 \details{
 Package: \tab msgen\cr
 Type: \tab Package\cr
-Version: \tab 0.1.1\cr
-Date: \tab 2018-08-27\cr
+Version: \tab 0.1.2\cr
+Date: \tab 2018-10-24\cr
 License: \tab Apache 2.0\cr
 }
 \author{
