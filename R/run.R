@@ -106,8 +106,14 @@ submit <- function(api_url_base,
                     " -oc ",
                     output_storage_account_container)
   
-  system(command,
-         invisible = FALSE)
+  ## Invoke System Command
+  if (.Platform$OS.type == "windows"){
+    system2(command,
+           invisible = FALSE)
+  } else{
+    system2(command)
+  }
+  
 }
 
 
@@ -119,8 +125,13 @@ list <- function(api_url_base,
                     " -k ",
                     subscription_key)
   
-  system(command,
-         invisible = FALSE)
+  ## Invoke System Command
+  if (.Platform$OS.type == "windows"){
+    system2(command,
+            invisible = FALSE)
+  } else{
+    system2(command)
+  }
   
 }
 
@@ -128,6 +139,7 @@ list <- function(api_url_base,
 status <- function(api_url_base,
                    subscription_key,
                    workflow_id = NULL){
+  
   command <- paste0("msgen status -u ",
                     api_url_base,
                     " -k ",
@@ -137,8 +149,13 @@ status <- function(api_url_base,
                     )
   
   
-  system(command,
-         invisible = FALSE)
+  ## Invoke System Command
+  if (.Platform$OS.type == "windows"){
+    system2(command,
+            invisible = FALSE)
+  } else{
+    system2(command)
+  }
   
 }
 
@@ -154,7 +171,12 @@ cancel <- function(api_url_base,
                     " -w ",
                     workflow_id)
   
-  system(command,
-         invisible = FALSE)
+  ## Invoke System Command
+  if (.Platform$OS.type == "windows"){
+    system2(command,
+            invisible = FALSE)
+  } else{
+    system2(command)
+  }
   
 }
