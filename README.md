@@ -7,7 +7,7 @@
 
 The Microsoft Genomics service in Azure can power genome sequencing using a cloud implementation of the Burrows-Wheeler Aligner (BWA) and the Genome Analysis Toolkit (GATK) for secondary analysis. The pipeline can take in multiple FASTQ and BAM files and provides alignment and variant outputs. The `msgen` package provides an interface to use the service from within R.
 
-## Installation
+## R Package Installation
 
 You can install the latest stable version from GitHub using the following command:
 ```r
@@ -17,13 +17,24 @@ library(msgen)
 ```
 *Note: You must have Python 2.7 (2.7.12 is recommended) installed.*
 
-## Usage
+## Setup
 
+### *Method 1:* Install the `msgen` CLI (Python library) from within R
 ```r
-# Install the `msgen` Python (Only needs to be run once if you don't already have the library installed.)
-install_msgen(method = "pip") #or "easy_install", "conda", or "setup.py"
+# Attempt to install from within R
+# (Only needs to be run once if you don't already have the Python library installed.)
+install_msgen(path = "/usr/bin/python2.7")
+```
+*Note: Due to the vast differences in Python configurations and system permissions, the above function may not work in all scenarios. If not, you will need to install the `msgen` Python library (using pip, pypi, conda, etc.) in your Python 2.x environment.*
 
-# Submit a job
+### *Method 2:* Install the `msgen` CLI (Python library) from the Terminal
+```bash
+sudo python2.7 -m pip install msgen
+```
+
+## Usage
+### Submit a job
+```r
 submit(api_url_base = "https://eastus2.microsoftgenomics.net",
        subscription_key = "04afabfc...",
        process_args = "R=b37m1",
@@ -35,40 +46,33 @@ submit(api_url_base = "https://eastus2.microsoftgenomics.net",
        output_storage_account_name = "mygenomicsstorage",
        output_storage_account_key = "6GyBAbvgw5sqo2...",
        output_storage_account_container = "myoutputdata")
+```
 
-# List all your jobs       
+### List all your jobs 
+```r
 list(api_url_base = "https://eastus2.microsoftgenomics.net",
      subscription_key = "04afabfc...")
+```
 
-# Check the status of your jobs     
+### Check the status of your jobs
+```r
 status(api_url_base = "https://eastus2.microsoftgenomics.net",
        subscription_key = "04afabfc...",
        workflow_id = "12g3c5a...")
+```
 
-# Cancel a job
+### Cancel a job
+```r
 cancel(api_url_base = "https://eastus2.microsoftgenomics.net",
        subscription_key = "04afabfc...",
        workflow_id = "12g3c5a...")
-
 ```
 
 ## To Do
-
-- [x] Configure `install_msgen` function
-	- [ ] Test installation options
-- [x] Create `submit` function
-	- [ ] Test `submit` function
-	- [ ] Add functionality for `config.txt` usage
-- [x] Create `list` function
-	- [ ] Test `list` function
-	- [ ] Add functionality for `config.txt` usage
-- [x] Create `status` function
-	- [ ] Test `status` function
-	- [ ] Add functionality for `config.txt` usage
-- [x] Create `cancel` function
-	- [ ] Test `cancel` function
-	- [ ] Add functionality for `config.txt` usage
-
+- [ ] Test all functions.
+- [ ] Change `list` function's name to `list_jobs` to avoid any naming conficts.
+- [ ] Add in the capability to use config files.
+- [ ] Add in functionality for uploading/downloading files to/from blob storage.
 
 ## Links
 
