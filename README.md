@@ -70,7 +70,6 @@ cancel(api_url_base = "https://eastus2.microsoftgenomics.net",
 
 ## To Do
 - [ ] Test all functions.
-- [ ] Change `list` function's name to `list_jobs` to avoid any naming conficts.
 - [ ] Add in the capability to use config files.
 - [ ] Add in functionality for uploading/downloading files to/from blob storage.
 

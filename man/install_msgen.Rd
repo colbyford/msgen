@@ -4,14 +4,12 @@
 \alias{install_msgen}
 \title{Install Python Libraries}
 \usage{
-install_msgen(method = "pip", version = 2.7)
+install_msgen(method = "pip", version = "python2.7")
 }
 \arguments{
-\item{method}{Method by which to install the msgen library.
-(Choose from either "setup.py", "pip", "easy_install", or "conda".)}
-
-\item{version}{Python version under which the package should be installed.
-(Note: must be a version of Python 2 such as 2.7.)}
+\item{path}{Path to Python version under which the package should be installed.
+Must be character string of the path to the version (e.g. "/usr/bin/python2.7")
+(Note: must be a version of Python 2 such as 2.7)}
 }
 \description{
 Install msgen and Azure Storage Python Libraries.
