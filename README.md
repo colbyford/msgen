@@ -7,6 +7,9 @@
 
 The Microsoft Genomics service in Azure can power genome sequencing using a cloud implementation of the Burrows-Wheeler Aligner (BWA) and the Genome Analysis Toolkit (GATK) for secondary analysis. The pipeline can take in multiple FASTQ and BAM files and provides alignment and variant outputs. The `msgen` package provides an interface to use the service from within R.
 
+---
+<img align="center" src="https://raw.githubusercontent.com/colbyford/msgen/master/img/msgen_workflow.png" alt="msgen workflow">
+
 ## R Package Installation
 
 You can install the latest stable version from GitHub using the following command:
