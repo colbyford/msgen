@@ -111,26 +111,31 @@ submit <- function(api_url_base,
     system2(command,
            invisible = FALSE)
   } else{
-    system2(command)
+    system(command)
   }
   
 }
 
 
 list <- function(api_url_base,
-                 subscription_key){
-  
-  command <- paste0("msgen list -u ",
-                    api_url_base,
-                    " -k ",
-                    subscription_key)
+                 subscription_key,
+                 config = NULL){
+  if (!missing(config)){
+    command <- paste0("msgen list -f ",
+                      config)
+  } else{
+    command <- paste0("msgen list -u ",
+                      api_url_base,
+                      " -k ",
+                      subscription_key)
+  }
   
   ## Invoke System Command
   if (.Platform$OS.type == "windows"){
     system2(command,
             invisible = FALSE)
   } else{
-    system2(command)
+    system(command)
   }
   
 }
@@ -154,7 +159,7 @@ status <- function(api_url_base,
     system2(command,
             invisible = FALSE)
   } else{
-    system2(command)
+    system(command)
   }
   
 }
@@ -176,7 +181,7 @@ cancel <- function(api_url_base,
     system2(command,
             invisible = FALSE)
   } else{
-    system2(command)
+    system(command)
   }
   
 }

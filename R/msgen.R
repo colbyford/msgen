@@ -11,8 +11,8 @@
 #' @details
 #' Package: \tab msgen\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.1.3\cr
-#' Date: \tab 2018-10-25\cr
+#' Version: \tab 0.1.4\cr
+#' Date: \tab 2018-10-31\cr
 #' License: \tab Apache 2.0\cr
 #'
 #' @author Colby T. Ford, Ph.D.

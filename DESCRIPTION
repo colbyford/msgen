@@ -1,7 +1,7 @@
 Package: msgen
 Type: Package
 Title: R functions for interfacing with the Microsoft Genomics Service in Azure
-Version: 0.1.3
+Version: 0.1.4
 Author: Colby T. Ford, Ph.D.
 Maintainer: Colby Ford <colby.ford@uncc.edu>
 Description: Provides functionality for R to interface with the `msgen` Python package and submit jobs to the Microsoft Genomics service in Azure. 

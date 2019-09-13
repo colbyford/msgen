@@ -15,7 +15,7 @@ install_msgen <- function(path = "/usr/bin/python2.7"){
   if (!reticulate::py_module_available("msgen")){
     # To-do: Add tryCatch()
     reticulate::use_python(path, required = TRUE)
-    reticulate::conda_install("msgen", method = "conda")
+    reticulate::conda_install("msgen")
   } else{
     cat("`msgen` is already installed.\n")
   }
