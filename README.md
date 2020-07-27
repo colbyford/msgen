@@ -85,6 +85,6 @@ cancel(api_url_base = "https://eastus2.microsoftgenomics.net",
 
 ## License
 
-This package/project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details
+This open source R package/project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details
 
 *Note: The Microsoft Genomics service, Azure, and the `msgen` Python command-line interface are all Copyright (c) Microsoft Corporation. All rights reserved.*
