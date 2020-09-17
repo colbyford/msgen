@@ -18,7 +18,7 @@ setup(
     description='Microsoft Genomics Command-line Client',
     long_description=long_description,
     platforms='any',
-    url='https://github.com/MicrosoftGenomics/msgen',
+    url='https://github.com/microsoft/msgen',
     license='MIT',
     packages=['msgen_cli'],
     py_modules=['msgen_cli.msgen'],
