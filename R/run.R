@@ -1,187 +1,195 @@
 #' @title Interact with the Microsoft Genomics service in Azure
 #' 
+#' @name workflows
+#' 
 #' @description Submit, list, check the status, and cancel genomics workflows in the Microsoft Genomics service in Azure.
 #' 
-#' @param api_url_base URL for your Microsoft Genomics service. (Example = `"https://eastus2.microsoftgenomics.net"`)
+#' @param region Region of your Microsoft Genomics service. (Example = `"eastus"`)
 #' @param subscription_key Subscription key for your Microsoft Genomics service. (Example = "04afabfc1af94c8285faec2f15e4e459")
 #'   Go to Azure portal and open your Genomics account page. Under the `Management` heading, choose `Access keys`. There, you find both the API URL and your access keys.
-#' @param process_args Process arguments for specifying a reference genome. Select from `"R=b37m1"`, `"R=hg38m1"`, `"R=hg38m1x"`, or `"R=hg19m1"`.
+#' @param description Description string for your submission. (Default = "Submission from msgen R package.")
+#' @param process Defines which pipeline to run. Either `"snapgatk"` (default) or `"gatk4"`.
+#' @param reference Process arguments for specifying a reference genome. Select from `"b37m1"`, `"hg38m1"`, `"hg38m1x"`, or `"hg19m1"` (default).
 #' @param input_storage_account_name Azure storage account name where input files reside.
 #' @param input_storage_account_key Azure storage account key which will be used to create temporary access tokens for input files.
-#' @param input_storage_account_container Azure blob container where input files reside.
-#' @param blob_name_1 First file name. (Can also be a vector of file names.)
-#' @param blob_name_2 Second file name, needed only if input is in the FASTQ format. (Can also be a vector of file names.)
-#' @param output_storage_account_name Azure storage account name where output files will be placed.
-#' @param output_storage_account_key Azure storage account key which will be used to create a temporary access token for an output container.
-#' @param output_storage_account_container Azure blob container where output files will be placed.
+#' @param input_container_name Azure blob container where input files reside.
+#' @param blob_name_1 First file name.
+#' @param blob_name_2 Second file name, needed only if input is in the FASTQ format.
+#' @param output_storage_account_name Azure storage account name where output files will be placed. (Optional: Will default to input storage account if not specified.)
+#' @param output_storage_account_key Azure storage account key which will be used to create a temporary access token for an output container. (Optional: Will default to input key if not specified.)
+#' @param output_container_name Azure blob container where output files will be placed. (Optional: Will default to input container if not specified.)
 #' @param workflow_id Workflow ID returned after submitting a job.
 #' 
 #' @usage 
-#' submit(api_url_base,
-#'        subscription_key,
-#'        process_args,
+#' submit_workflow(subscription_key,
+#'        region,
+#'        description = "Submission from msgen R package.",
+#'        process = "snapgatk",
+#'        reference = "hg19m1",
 #'        input_storage_account_name,
 #'        input_storage_account_key,
-#'        input_storage_account_container,
+#'        input_container_name,
 #'        blob_name_1,
 #'        blob_name_2 = NULL,
 #'        output_storage_account_name,
 #'        output_storage_account_key,
-#'        output_storage_account_container)
+#'        output_container_name)
 #'        
-#' list(api_url_base,
-#'      subscription_key)
+#' list_workflows(subscription_key,
+#'      region)
 #'           
-#' status(api_url_base,
-#'        subscription_key,
+#' get_workflow_status(subscription_key,
+#'        region,
 #'        workflow_id = NULL)
 #'           
-#' cancel(api_url_base,
-#'        subscription_key,
+#' cancel_workflow(subscription_key,
+#'        region,
 #'        workflow_id = NULL)
 #' 
 #' @examples 
-#' submit(api_url_base = "https://eastus2.microsoftgenomics.net",
-#'        subscription_key = "04afabfc...",
-#'        process_args = "R=b37m1",
+#' submit_workflow(subscription_key = "04afabfc...",
+#'        region = "eastus",
+#'        process = "snapgatk",
+#'        reference = "b37m1",
 #'        input_storage_account_name = "mygenomicsstorage",
 #'        input_storage_account_key= "6GyBAbvgw5sqo2...",
 #'        input_storage_account_container = "myinputdata",
 #'        blob_name_1 = "NA12878-chr21_1.fq.gz",
-#'        blob_name_2 = "NA12878-chr21_2.fq.gz",
-#'        output_storage_account_name = "mygenomicsstorage",
-#'        output_storage_account_key = "6GyBAbvgw5sqo2...",
-#'        output_storage_account_container = "myoutputdata")
+#'        blob_name_2 = "NA12878-chr21_2.fq.gz")
 #'        
-#' list(api_url_base = "https://eastus2.microsoftgenomics.net",
-#'      subscription_key = "04afabfc...")
+#' list_workflows(subscription_key = "04afabfc...",
+#'      region = "eastus",)
 #'      
-#' status(api_url_base = "https://eastus2.microsoftgenomics.net",
-#'        subscription_key = "04afabfc...",
+#' get_workflow_status(subscription_key = "04afabfc...",
+#'        region = "eastus",
 #'        workflow_id = "12g3c5a...")
 #' 
-#' cancel(api_url_base = "https://eastus2.microsoftgenomics.net",
-#'        subscription_key = "04afabfc...",
+#' cancel_workflow(subscription_key = "04afabfc...",
+#'        region = "eastus",
 #'        workflow_id = "12g3c5a...")
 #' 
-#' @export submit
-#' @export list
-#' @export status
-#' @export cancel
+#' @export submit_workflow
+#' @export list_workflows
+#' @export get_workflow_status
+#' @export cancel_workflow
 ####################
 
-submit <- function(api_url_base,
-                   subscription_key,
-                   process_args,
+
+list_workflows <- function(subscription_key,
+                 region){
+  
+  url <- paste0("https://", region, ".microsoftgenomics.net/api/workflows/")
+  
+  res <- GET(url, add_headers(`Ocp-Apim-Subscription-Key` = subscription_key,
+                            `Content-Type` = "application/json",
+                            `User-Agent` = "Microsoft Genomics R Client"))
+  
+  output <- as.data.frame(do.call(rbind, content(res)))
+  
+  return(output)
+  
+}
+
+submit_workflow <- function(subscription_key,
+                   region,
+                   description = "Submission from msgen R package.",
+                   process = "snapgatk",
+                   reference = "hg19m1",
                    input_storage_account_name,
                    input_storage_account_key,
-                   input_storage_account_container,
+                   input_container_name,
                    blob_name_1,
                    blob_name_2 = NULL,
-                   output_storage_account_name,
-                   output_storage_account_key,
-                   output_storage_account_container){
+                   output_storage_account_name = input_storage_account_name,
+                   output_storage_account_key = input_storage_account_key,
+                   output_container_name = input_container_name){
   
-  command <- paste0("msgen submit -u ",
-                    api_url_base,
-                    " -k ",
-                    subscription_key,
-                    " -pa ",
-                    process_args,
-                    " -ia ",
-                    input_storage_account_name,
-                    " -ik ",
-                    input_storage_account_key,
-                    " -ic ",
-                    input_storage_account_container,
-                    " -b1 ",
-                    paste(blob_name_1, collapse = " "),
-                    if(!is.null("blob_name_2")){paste0( " -b2 ",
-                                                        paste(blob_name_2, collapse = " "))},
-                   
-                    " -oa ",
-                    output_storage_account_name,
-                    " -ok ",
-                    output_storage_account_key,
-                    " -oc ",
-                    output_storage_account_container)
+  reference = paste0("R=", reference)
   
-  ## Invoke System Command
-  if (.Platform$OS.type == "windows"){
-    system2(command,
-           invisible = FALSE)
-  } else{
-    system(command)
-  }
+  input_continer_sas <- AzureStor::get_account_sas(input_storage_account_name,
+                                          key = input_storage_account_key)
   
+  output_container_sas <- AzureStor::get_account_sas(output_storage_account_name,
+                                                     key = output_storage_account_key)
+  
+  blobnames_with_sas <- paste(paste0(blob_name_1, "?", input_continer_sas),
+                              if(!is.null(blob_name_2)){
+                                paste0(blob_name_2, "?", input_continer_sas)
+                              },
+                              sep = ",")
+  
+  
+  url <- paste0("https://", region, ".microsoftgenomics.net/api/workflows/")
+  
+  
+  body <- list(WorkflowClass = "",
+               Description = description,
+               InputArgs = list(
+                 BLOBNAMES_WITH_SAS = blobnames_with_sas,
+                 ACCOUNT = input_storage_account_name,
+                 CONTAINER = input_container_name,
+                 BLOBNAMES = paste(c(blob_name_1,
+                                     blob_name_2),
+                                   collapse = ",")
+               ),
+               InputStorageType = "AZURE_BLOCK_BLOB",
+               OutputArgs = list(
+                 ACCOUNT = output_storage_account_name,
+                 CONTAINER = output_container_name,
+                 CONTAINER_SAS = output_container_sas,
+                 OUTPUT_INCLUDE_LOGFILES = TRUE,
+                 OVERWRITE = FALSE,
+                 OUTPUT_FILENAME_BASE = ""
+               ),
+               OutputStorageType = "AZURE_BLOCK_BLOB",
+               ProcessArgs = reference,
+               Process = process,
+               OptionalArgs = list(),
+               IgnoreAzureRegion = NULL
+  )
+  
+  res <- POST(url, add_headers(`Ocp-Apim-Subscription-Key` = subscription_key,
+                               `Content-Type` = "application/json",
+                               `User-Agent` = "Microsoft Genomics R Client"),
+              body = body,
+              encode = "json")
+  
+  output <- as.data.frame(t(do.call(rbind, content(res))))
+  
+  return(output)
 }
 
 
-list <- function(api_url_base,
-                 subscription_key,
-                 config = NULL){
-  if (!missing(config)){
-    command <- paste0("msgen list -f ",
-                      config)
-  } else{
-    command <- paste0("msgen list -u ",
-                      api_url_base,
-                      " -k ",
-                      subscription_key)
-  }
-  
-  ## Invoke System Command
-  if (.Platform$OS.type == "windows"){
-    system2(command,
-            invisible = FALSE)
-  } else{
-    system(command)
-  }
-  
-}
-
-
-status <- function(api_url_base,
-                   subscription_key,
+get_workflow_status <- function(subscription_key,
+                   region,
                    workflow_id = NULL){
   
-  command <- paste0("msgen status -u ",
-                    api_url_base,
-                    " -k ",
-                    subscription_key,
-                    if(!is.null("workflow_id")){paste0(" -w ",
-                                                       workflow_id)}
-                    )
   
+  url <- paste0("https://", region, ".microsoftgenomics.net/api/workflows/", workflow_id)
   
-  ## Invoke System Command
-  if (.Platform$OS.type == "windows"){
-    system2(command,
-            invisible = FALSE)
-  } else{
-    system(command)
-  }
+  res <- GET(url, add_headers(`Ocp-Apim-Subscription-Key` = subscription_key,
+                              `Content-Type` = "application/json",
+                              `User-Agent` = "Microsoft Genomics R Client"))
+  
+  output <- as.data.frame(t(do.call(rbind, content(res))))
+  
+  return(output)
   
 }
 
 
-cancel <- function(api_url_base,
-                   subscription_key,
-                   workflow_id){
+cancel_workflow <- function(subscription_key,
+                   region,
+                   workflow_id = NULL){
   
-  command <- paste0("msgen cancel -u ",
-                    api_url_base,
-                    " -k ",
-                    subscription_key,
-                    " -w ",
-                    workflow_id)
+  url <- paste0("https://", region, ".microsoftgenomics.net/api/workflows/", workflow_id)
   
-  ## Invoke System Command
-  if (.Platform$OS.type == "windows"){
-    system2(command,
-            invisible = FALSE)
-  } else{
-    system(command)
-  }
+  res <- DELETE(url, add_headers(`Ocp-Apim-Subscription-Key` = subscription_key,
+                              `Content-Type` = "application/json",
+                              `User-Agent` = "Microsoft Genomics R Client"))
+  
+  output <- as.data.frame(t(do.call(rbind, content(res))))
+  
+  return(output)
   
 }
