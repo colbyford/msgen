@@ -27,15 +27,16 @@ submit_workflow(subscription_key = "04afabfc...",
                 reference = "b37m1",
                 input_storage_account_name = "mygenomicsstorage",
                 input_storage_account_key= "6GyBAbvgw5sqo2...",
-                input_storage_account_container = "myinputdata",
+                input_container_name = "myinputdata",
                 blob_name_1 = "NA12878-chr21_1.fq.gz",
-                blob_name_2 = "NA12878-chr21_2.fq.gz")
+                blob_name_2 = "NA12878-chr21_2.fq.gz",
+                output_container_name = "myoutputdata")
 ```
 
 ### List all your workflows 
 ```r
 list_workflows(subscription_key = "04afabfc...",
-               region = "eastus",)
+               region = "eastus")
 ```
 
 ### Check the status of your workflow
