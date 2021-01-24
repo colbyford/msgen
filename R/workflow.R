@@ -92,7 +92,7 @@ list_workflows <- function(subscription_key,
 
 submit_workflow <- function(subscription_key,
                    region,
-                   description = "Submission from msgen R package.",
+                   description = "Submission from cford/msgen R package.",
                    process = "snapgatk",
                    reference = "hg19m1",
                    input_storage_account_name,
