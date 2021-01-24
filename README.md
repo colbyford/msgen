@@ -14,67 +14,44 @@ The Microsoft Genomics service in Azure can power genome sequencing using a clou
 
 You can install the latest stable version from GitHub using the following command:
 ```r
-library(devtools)
-install_github("colbyford/msgen")
+remotes::install_github("colbyford/msgen")
 library(msgen)
-```
-*Note: You must have Python 2.7 (2.7.12 is recommended) installed.*
-
-## Setup
-
-### *Method 1:* Install the `msgen` CLI (Python library) from within R
-```r
-# Attempt to install from within R
-# (Only needs to be run once if you don't already have the Python library installed.)
-install_msgen(path = "/usr/bin/python2.7")
-```
-*Note: Due to the vast differences in Python configurations and system permissions, the above function may not work in all scenarios. If not, you will need to install the `msgen` Python library (using pip, pypi, conda, etc.) in your Python 2.x environment.*
-
-### *Method 2:* Install the `msgen` CLI (Python library) from the Terminal
-```bash
-sudo python2.7 -m pip install msgen
 ```
 
 ## Usage
-### Submit a job
+### Submit a workflow
 ```r
-submit(api_url_base = "https://eastus2.microsoftgenomics.net",
-       subscription_key = "04afabfc...",
-       process_args = "R=b37m1",
-       input_storage_account_name = "mygenomicsstorage",
-       input_storage_account_key= "6GyBAbvgw5sqo2...",
-       input_storage_account_container = "myinputdata",
-       blob_name_1 = "NA12878-chr21_1.fq.gz",
-       blob_name_2 = "NA12878-chr21_2.fq.gz",
-       output_storage_account_name = "mygenomicsstorage",
-       output_storage_account_key = "6GyBAbvgw5sqo2...",
-       output_storage_account_container = "myoutputdata")
+submit_workflow(subscription_key = "04afabfc...",
+                region = "eastus",
+                process = "snapgatk",
+                reference = "b37m1",
+                input_storage_account_name = "mygenomicsstorage",
+                input_storage_account_key= "6GyBAbvgw5sqo2...",
+                input_storage_account_container = "myinputdata",
+                blob_name_1 = "NA12878-chr21_1.fq.gz",
+                blob_name_2 = "NA12878-chr21_2.fq.gz")
 ```
 
-### List all your jobs 
+### List all your workflows 
 ```r
-list(api_url_base = "https://eastus2.microsoftgenomics.net",
-     subscription_key = "04afabfc...")
+list_workflows(subscription_key = "04afabfc...",
+               region = "eastus",)
 ```
 
-### Check the status of your jobs
+### Check the status of your workflow
 ```r
-status(api_url_base = "https://eastus2.microsoftgenomics.net",
-       subscription_key = "04afabfc...",
-       workflow_id = "12g3c5a...")
+get_workflow_status(subscription_key = "04afabfc...",
+                    region = "eastus",
+                    workflow_id = "12g3c5a...")
 ```
 
-### Cancel a job
+### Cancel a workflow
 ```r
-cancel(api_url_base = "https://eastus2.microsoftgenomics.net",
-       subscription_key = "04afabfc...",
-       workflow_id = "12g3c5a...")
+cancel_workflow(subscription_key = "04afabfc...",
+                region = "eastus",
+                workflow_id = "12g3c5a...")
 ```
 
-## To Do
-- [ ] Test all functions.
-- [ ] Add in the capability to use config files.
-- [ ] Add in functionality for uploading/downloading files to/from blob storage.
 
 ## Links
 
