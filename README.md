@@ -29,8 +29,8 @@ submit_workflow(subscription_key = "04afabfc...",
                 input_storage_account_name = "mygenomicsstorage",
                 input_storage_account_key= "6GyBAbvgw5sqo2...",
                 input_container_name = "myinputdata",
-                blob_name_1 = "NA12878-chr21_1.fq.gz",
-                blob_name_2 = "NA12878-chr21_2.fq.gz",
+                blob_name_1 = "chr21_1.fq.gz",
+                blob_name_2 = "chr21_2.fq.gz",
                 output_container_name = "myoutputdata")
 ```
 
@@ -57,9 +57,11 @@ cancel_workflow(subscription_key = "04afabfc...",
 
 ## Links
 
+- [Medium Blog Post on this Package](https://colbyford.medium.com/msgen-r-package-af752f5ef3eb)
 - [__msgen__ Python command-line client](https://github.com/microsoft/msgen)
 - [Microsoft Genomics service on Azure](https://azure.microsoft.com/en-us/services/genomics/)
 - [Microsoft Genomics Documentation](https://docs.microsoft.com/en-us/azure/genomics/)
+
 
 
 ## License
