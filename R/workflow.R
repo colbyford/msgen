@@ -107,10 +107,21 @@ submit_workflow <- function(subscription_key,
   reference = paste0("R=", reference)
   
   input_continer_sas <- AzureStor::get_account_sas(input_storage_account_name,
-                                          key = input_storage_account_key)
+                                                   key = input_storage_account_key,
+                                                   key_start = Sys.Date(),
+                                                   key_expiry = Sys.Date() + 2,
+                                                   permission = "rwcdl")
   
-  output_container_sas <- AzureStor::get_account_sas(output_storage_account_name,
-                                                     key = output_storage_account_key)
+  if (output_storage_account_name == input_storage_account_name & 
+      output_container_name == input_container_name){
+    output_container_sas <- input_continer_sas
+  } else {
+    output_container_sas <- AzureStor::get_account_sas(output_storage_account_name,
+                                                       key = output_storage_account_key,
+                                                       key_start = Sys.Date(),
+                                                       key_expiry = Sys.Date() + 2,
+                                                       permission = "rwcdl")
+  }
   
   blobnames_with_sas <- paste(paste0(blob_name_1, "?", input_continer_sas),
                               if(!is.null(blob_name_2)){
