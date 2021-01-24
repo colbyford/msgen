@@ -1,7 +1,7 @@
 
 # *msgen* - R functions for interfacing with the Microsoft Genomics service in Azure
 <h3 align = "right">Colby T. Ford, Ph.D.</h3>
-<img align="right" src="https://raw.githubusercontent.com/colbyford/msgen/master/img/msgen_hex.png" alt="msgen icon" width="200">
+<!--<img align="right" src="https://raw.githubusercontent.com/colbyford/msgen/master/img/msgen_hex.png" alt="msgen icon" width="200">-->
 
 ## Description
 
