@@ -58,7 +58,7 @@ cancel_workflow(subscription_key = "04afabfc...",
 ## Links
 
 - [Medium Blog Post on this Package](https://colbyford.medium.com/msgen-r-package-af752f5ef3eb)
-- [__msgen__ Python command-line client](https://github.com/microsoft/msgen)
+- [__msgen__ Python 2.7 command-line client](https://github.com/microsoft/msgen)
 - [Microsoft Genomics service on Azure](https://azure.microsoft.com/en-us/services/genomics/)
 - [Microsoft Genomics Documentation](https://docs.microsoft.com/en-us/azure/genomics/)
 
